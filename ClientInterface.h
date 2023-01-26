@@ -1,9 +1,9 @@
-#pragma once
+п»ї#pragma once
 #include <iostream>
 #include <string>
 using namespace std;
 
-//Процессы меню
+//РџСЂРѕС†РµСЃСЃС‹ РјРµРЅСЋ
 class ClientInterface {
 private:
 

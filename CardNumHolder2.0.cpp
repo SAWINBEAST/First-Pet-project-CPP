@@ -1,6 +1,6 @@
 ﻿#include "CardActions.h"
 #include "ClientInterface.h"
-#include "LoginProcces.h"
+#include "LoginProcess.h"
 
 #include <iostream>
 #include <stdio.h>
@@ -19,7 +19,7 @@ enum CHOICE {	//26
 };
 
 int main() // Ниже присутствуют числа в комментах. Это ключи для поиска развёрнутого комментария в файле CommentsKeys.txt
-{	
+{
 	// Регистрация и вход
 	LoginProcess login;
 	int choice1 = 0;		//1
@@ -42,11 +42,11 @@ int main() // Ниже присутствуют числа в комментах
 			main();
 		}
 
-		else 
+		else
 		{
 			cout << "Succesfully logged in! \n " << endl;
 		}
-		
+
 	}
 
 	else
@@ -54,7 +54,7 @@ int main() // Ниже присутствуют числа в комментах
 		cout << "We have not got this variant. Sorry. \nLet's try again !\n  " << endl;
 		main();
 	}
-	
+
 
 	// Выполнение задач КардХолдера 
 	while (true)  //3 
@@ -69,15 +69,15 @@ int main() // Ниже присутствуют числа в комментах
 
 		//Вывод данных карты 
 		if (choice == GET_CARD) {
-			system("cls");		
-			
+			system("cls");
+
 			string card_to_get;
 			getline(cin, card_to_get);	//6
 			cout << "Nickname of card: ";
 			getline(cin, card_to_get);
 			//7
 			user.GetNums(card_to_get);
-			
+
 			system("pause");
 		}
 
@@ -97,7 +97,7 @@ int main() // Ниже присутствуют числа в комментах
 
 			system("pause");
 		}
-		
+
 		//Изменение старых данных карты
 		else if (choice == CHANGE_OLD) {
 			system("cls");
@@ -105,7 +105,7 @@ int main() // Ниже присутствуют числа в комментах
 			string change_cardname;
 			string change_cardnums;
 
-			cout <<"Which card would you like to edit?\nEnter the nickname of your card: ";
+			cout << "Which card would you like to edit?\nEnter the nickname of your card: ";
 			cin >> change_cardname;
 			cout << "Enter new numbers for this card: ";
 			cin >> change_cardnums;
@@ -115,7 +115,7 @@ int main() // Ниже присутствуют числа в комментах
 
 			system("pause");
 		}
-		
+
 		//Удаление одной карты пользователя
 		else if (choice == REMOVE_ONE) {
 			system("cls");
@@ -128,7 +128,7 @@ int main() // Ниже присутствуют числа в комментах
 		//Удаление всех карт пользователя
 		else if (choice == REMOVE_ALL) { //in progress
 			system("cls");
-			
+
 			user.RemoveCards();
 			//12
 			system("pause");

@@ -1,12 +1,12 @@
+п»ї#include "LoginProcess.h"
 #include <iostream>
-#include "LoginProcess.h"
 #include <ostream>
 #include <istream>
 #include <fstream>
 #include <string>
 #include <cstdio>
 
-// Проводит регистрацию нового пользователя и запись его данных в файл
+// РџСЂРѕРІРѕРґРёС‚ СЂРµРіРёСЃС‚СЂР°С†РёСЋ РЅРѕРІРѕРіРѕ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ Рё Р·Р°РїРёСЃСЊ РµРіРѕ РґР°РЅРЅС‹С… РІ С„Р°Р№Р»
 void LoginProcess::Registration() {
 
 	string username, password;
@@ -16,7 +16,6 @@ void LoginProcess::Registration() {
 
 	ofstream file;
 	file.open("C:\\" + username + ".txt");
-	//file.open("C:\Users\79296\\hello.txt");
 	if (!file.is_open()) {
 		cout << "[-] File is not opened!";
 		exit(EXIT_FAILURE);
@@ -27,7 +26,7 @@ void LoginProcess::Registration() {
 
 }
 
-// Осуществляет вход уже зарегистрированного пользователя
+// РћСЃСѓС‰РµСЃС‚РІР»СЏРµС‚ РІС…РѕРґ СѓР¶Рµ Р·Р°СЂРµРіРёСЃС‚СЂРёСЂРѕРІР°РЅРЅРѕРіРѕ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ
 bool LoginProcess::IsLoggedIn() {
 
 	string username, password, un, pw;
@@ -36,12 +35,11 @@ bool LoginProcess::IsLoggedIn() {
 	cout << "Enter password: "; cin >> password;
 
 	ifstream read("C:\\" + username + ".txt");
-	//ifstream read("C:\Users\79296\\hello.txt");
 	if (!read.is_open()) {
 		cout << "[-] File is not opened!";
 		exit(EXIT_FAILURE);
 	}
-	getline(read, un);		// тут можно циклом сделать прочтение (while)
+	getline(read, un);		// С‚СѓС‚ РјРѕР¶РЅРѕ С†РёРєР»РѕРј СЃРґРµР»Р°С‚СЊ РїСЂРѕС‡С‚РµРЅРёРµ (while)
 	getline(read, pw);
 
 	read.close();

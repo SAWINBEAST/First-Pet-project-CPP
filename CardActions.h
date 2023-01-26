@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include <iostream>
 #include <string>
 using namespace std;
@@ -11,17 +11,17 @@ public:
 	{}
 	~CardActions()
 	{
-		std::cout << "Destructor called for class CardActions" << std::endl;
+		std::cout << "Thank's for using our services.\n" << std::endl; //
 	}
-	//Âûâîä äàííûõ êàðòû
-	void GetNums();
-	//Ñîçäàíèå íîâîé êàðòû
-	void EnterNew();	//21
-	//Èçìåíåíèå ñòàðûõ äàííûõ êàðòû
-	void ChangeNumsFirst();
-	void ChangeNumsSecond();
-	//Óäàëåíèå îäíîé êàðòû ïîëüçîâàòåëÿ
+	//Ð’Ñ‹Ð²Ð¾Ð´ Ð´Ð°Ð½Ð½Ñ‹Ñ… ÐºÐ°Ñ€Ñ‚Ñ‹
+	void GetNums(const string& card_to_get);
+	//Ð¡Ð¾Ð·Ð´Ð°Ð½Ð¸Ðµ Ð½Ð¾Ð²Ð¾Ð¹ ÐºÐ°Ñ€Ñ‚Ñ‹
+	void EnterNew(const string& new_cardnums, const string& new_cardname);	//21
+	//Ð˜Ð·Ð¼ÐµÐ½ÐµÐ½Ð¸Ðµ ÑÑ‚Ð°Ñ€Ñ‹Ñ… Ð´Ð°Ð½Ð½Ñ‹Ñ… ÐºÐ°Ñ€Ñ‚Ñ‹
+	void ChangeNumsFirst(const string& change_cardname);
+	void ChangeNumsSecond(const string& change_cardname, const string& change_cardnums);
+	//Ð£Ð´Ð°Ð»ÐµÐ½Ð¸Ðµ Ð¾Ð´Ð½Ð¾Ð¹ ÐºÐ°Ñ€Ñ‚Ñ‹ Ð¿Ð¾Ð»ÑŒÐ·Ð¾Ð²Ð°Ñ‚ÐµÐ»Ñ
 	void RemoveCard();
-	//Óäàëåíèå âñåõ êàðò ïîëüçîâàòåëÿ
+	//Ð£Ð´Ð°Ð»ÐµÐ½Ð¸Ðµ Ð²ÑÐµÑ… ÐºÐ°Ñ€Ñ‚ Ð¿Ð¾Ð»ÑŒÐ·Ð¾Ð²Ð°Ñ‚ÐµÐ»Ñ
 	void RemoveCards();
 };

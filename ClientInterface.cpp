@@ -1,12 +1,12 @@
+п»ї#include "ClientInterface.h"
 #include <iostream>
-#include "ClientInterface.h"
 #include <ostream>
 #include <istream>
 #include <fstream>
 #include <string>
 #include <cstdio>
 
-// Показывает меню в консоли
+// РџРѕРєР°Р·С‹РІР°РµС‚ РјРµРЅСЋ РІ РєРѕРЅСЃРѕР»Рё
 void ClientInterface::ShowMenu() {
 	cout << "[1] Get card details. " << endl;
 	cout << "[2] Enter new card. " << endl;

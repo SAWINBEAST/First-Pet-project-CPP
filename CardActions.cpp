@@ -1,12 +1,12 @@
+п»ї#include "CardActions.h"
 #include <iostream>
-#include "CardActions.h"
 #include <ostream>
 #include <istream>
 #include <fstream>
 #include <string>
 #include <cstdio>
 
-// Показывает данные карты 
+// РџРѕРєР°Р·С‹РІР°РµС‚ РґР°РЅРЅС‹Рµ РєР°СЂС‚С‹ 
 void CardActions::GetNums(const string& card_to_get) {
 	//13
 	fstream file("" + card_to_get + ".txt", std::ios::in);
@@ -36,7 +36,7 @@ void CardActions::GetNums(const string& card_to_get) {
 	cout << "Above you see the details of card \"" + card_to_get + "\" " << endl;
 }
 
-// Записывает новые данные карты 
+// Р—Р°РїРёСЃС‹РІР°РµС‚ РЅРѕРІС‹Рµ РґР°РЅРЅС‹Рµ РєР°СЂС‚С‹ 
 void CardActions::EnterNew(const string& new_cardnums, const string& new_cardname) {
 	ofstream file("" + new_cardname + ".txt", std::ios::app);	//15
 	if (!file.is_open()) {
@@ -57,10 +57,10 @@ void CardActions::EnterNew(const string& new_cardnums, const string& new_cardnam
 	file << encrypt_cardnums;	//16
 	file.close();
 
-	cout << "New cardnumbers was succesfully recorded. " << endl;
+	cout << "New cardnumbers was succesfully recorded.\n " << endl;
 }
 
-// Удаляет данные существующей карты 
+// РЈРґР°Р»СЏРµС‚ РґР°РЅРЅС‹Рµ СЃСѓС‰РµСЃС‚РІСѓСЋС‰РµР№ РєР°СЂС‚С‹ 
 void CardActions::ChangeNumsFirst(const string& change_cardname) {//17
 
 	fstream file("" + change_cardname + ".txt", std::ios::out | std::ios::trunc);		//18  
@@ -72,7 +72,7 @@ void CardActions::ChangeNumsFirst(const string& change_cardname) {//17
 
 }
 
-// Меняет(обновляет) данные существующей карты
+// РњРµРЅСЏРµС‚(РѕР±РЅРѕРІР»СЏРµС‚) РґР°РЅРЅС‹Рµ СЃСѓС‰РµСЃС‚РІСѓСЋС‰РµР№ РєР°СЂС‚С‹
 void CardActions::ChangeNumsSecond(const string& change_cardname, const string& change_cardnums) {
 
 	fstream file("" + change_cardname + ".txt", std::ios::app);		//ofstream ?
@@ -92,13 +92,13 @@ void CardActions::ChangeNumsSecond(const string& change_cardname, const string& 
 		encrypt_cardnums += std::to_string((int)(change_cardnums[i]));
 	}
 
-	file << encrypt_cardnums;			// Тут нужно как-то поаккуратнее ввести данные
+	file << encrypt_cardnums;			// РўСѓС‚ РЅСѓР¶РЅРѕ РєР°Рє-С‚Рѕ РїРѕР°РєРєСѓСЂР°С‚РЅРµРµ РІРІРµСЃС‚Рё РґР°РЅРЅС‹Рµ
 	file.close();
 
-	cout << "Actual cardnumbers for " + change_cardname + " was succesfully changed. " << endl;
+	cout << "Actual cardnumbers for " + change_cardname + " was succesfully changed.\n" << endl;
 }
 
-// Удаляет данные определённой карты
+// РЈРґР°Р»СЏРµС‚ РґР°РЅРЅС‹Рµ РѕРїСЂРµРґРµР»С‘РЅРЅРѕР№ РєР°СЂС‚С‹
 void CardActions::RemoveCard() {
 	//19
 	char file_name[30];	//20
@@ -111,7 +111,7 @@ void CardActions::RemoveCard() {
 
 }
 
-// Удаляет все карты
+// РЈРґР°Р»СЏРµС‚ РІСЃРµ РєР°СЂС‚С‹
 void CardActions::RemoveCards() {
 	cout << "This action is temporarily unavailable.\nContact the developer\nWe suggest you delete all files separately." << endl;
 

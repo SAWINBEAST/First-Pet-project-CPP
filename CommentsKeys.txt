@@ -6,183 +6,32 @@
 //4//	исправить ошибку ввода строчного символа;
 //5//	исправить ошибку ввода строчного символа / нужно оптимизировать путем задачи этой переменной через Класс! и через указатели на динамическую память;
 //6//	Для считывания пробела после cin (choice);
-//7//	Нужна проверка на существование такого файла (никнейма карты)
-				char path[255];
-				gets(path);
-				DIR* dir = opendir(path);
-				if (dir)
-				{
-					struct dirent* ent;
-					while ((ent = readdir(dir)) != NULL)
-					{
-						cout << (ent->d_name) << "\n";
-					}
-				}
-				else
-				{
-					cout << "Error opening directory" << endl;
-				}
-
-			/// 
-
-				ifstream iff("hgh.txt");
-				if (iff.bad() == true) 
-					cout << "file is not present"; 
-				else {}
-		
+//7//	Нужна проверка на существование такого файла (никнейма карты) : https://docs.google.com/document/d/1RPJY0uDA3hxr2lDedYEDEqBo8Ssw9JUoxR1ymmzA3Gc/edit?usp=sharing
 //8//	здесь я поменял int на string , дабы была возможность шифрования. С int не получается;
 //9//	сделать тут Переопределение операторов ввода путем создания класса ввода с обьектом!!! Обязательно
-//10//	Убрал эту тему, так как не получалось нормально передать в класс char
-			string removable_cardname;
-			//char removable_cardname[30];
-			cout << "Which card would you like to remove?\nEnter the nickname of your card: ";
-			//getline(cin; change_cardname);				// я хз, оно чето не работает тут 
-			cin >> removable_cardname;
-
+//10//	Убрал эту тему, так как не получалось нормально передать в класс char : https://docs.google.com/document/d/1RPJY0uDA3hxr2lDedYEDEqBo8Ssw9JUoxR1ymmzA3Gc/edit?usp=sharing
 //11//	(removable_cardname);
-//12//	Здесь я изложил разные варианты поиска файла в папке по заданным параметрам для дальнейшего его удаления.
-
-				#include "stdafx.h"
-				#include "windows.h"
-				#include "iostream.h"
-
-				void main()
-				{
-					WIN32_FIND_DATA FindFileData;
-					HANDLE hf;
-					hf=FindFirstFile("c:\\*", &FindFileData);
-					if (hf!=INVALID_HANDLE_VALUE)
-					{
-						do
-						{
-							cout << FindFileData.cFileName << endl;
-						}
-						while (FindNextFile(hf,&FindFileData)!=0);
-						FindClose(hf);
-					}
-				}
-
-			///
-
-			void get_file_list(string DATA_DIR)
-			{
-				HANDLE hFind;
-				WIN32_FIND_DATA data;
-
-				hFind = FindFirstFile(LPCWSTR(DATA_DIR.c_str()), &data);
-
-				if (hFind != INVALID_HANDLE_VALUE) {
-					do {
-						printf("%s\n", data.cFileName);
-					} while (FindNextFile(hFind, &data));
-					FindClose(hFind);
-					}
-			}
-
-			///
-
-				#include <stdlib.h>
-				#include <stdio.h>
-				#include <sys/stat.h>
-
-				#include <limits>
-				#include <cstdio>
-				#include <iostream>
-				#include <fstream>
-				#include <bitset>
-
-				#include <windows.h>
-				#include <tchar.h>
-				#include <stdio.h>
-
-			///
-
-			 setlocale(LC_ALL, "");
-
-			  WIN32_FIND_DATA MyFile;
-			  HANDLE hFind;
-
-			  hFind = FindFirstFile(L"D:\\TestFolder\\*~*.txt", &MyFile);
-
-			  // проверка найден ли файл
-			  if (INVALID_HANDLE_VALUE != hFind)
-			  {
-				do // основная часть алгоритма
-				{
-				  //         название_файла	  |			 размер			  |		удалить/оставить
-				  wcout << MyFile.cFileName << "|" << MyFile.nFileSizeLow<<"|";
-
-				  // проверка файла на удаление
-				  if (MyFile.nFileSizeLow == 0)
-				  {
-					cout << "Этот удалить" << endl;
-
-					if (DeleteFile(MyFile.cFileName) != 0) { // удаление
-					  cout << "Deleting Access!" << endl; // вывод сообщения успешном удалении
-					}
-					else { // вывод сообщения об ошибке удаления
-					  cout << "Deleting Failed => " << GetLastError() << endl;
-					}
-
-				  }
-				  else
-				  {
-					cout << "Этот оставить" << endl;
-				  }
-
-				  cout << endl << endl;
-
-
-				} while (NULL != FindNextFile(hFind, &MyFile));
-
-			  }
-			  else
-			  {
-				cout << "\n\nФайлы удовлетваряющие условию не найдены!\n\n";
-			  }
-
-			  FindClose(hFind);
-			  FindFirstFile("Some/Directory/Some/*.some");	// опять же C++17
-
+//12//	Здесь я изложил разные варианты поиска файла в папке по заданным параметрам для дальнейшего его удаления : https://docs.google.com/document/d/1RPJY0uDA3hxr2lDedYEDEqBo8Ssw9JUoxR1ymmzA3Gc/edit?usp=sharing
 //13//	проверка на существование / exists() - как вариант проверки / if (file.bad() == true) ;
 //14//	промежуточная строка;
 //15//	std::ios::app - Производит дозапись в файл в конец готового листа ; 
 //16//	Тут можно было бы как-то поаккуратнее ввести данные;
 //17//	Добавить случай, если никнейм неправильно введен или такой карты нет. Как у get_name();
 //18//	ios::out: файл открывается для вывода (записи). При этом старые данные удаляются  // ios::trunc: файл усекается при открытии. Может быть установлен, если также установлен режим out  ;
-//19//	Варианты удаления:
-				//rmdir (	if (!rmdir(removable_card)) printf("FORMLET removed\n"); )
-				
-				//boost:: filesystem:: remove_all (yourPath)		// это всё для с++17
-				//std::filesystem::path::remove("myEmptyDirectoryOrFile"); 
-				//std::filesystem::path::remove_all("myDirectory");
-				//#include <experimental/filesystem>
-				//std::experimental::filesystem::path::remove("myDirectory");
-				//std::experimental::filesystem::path::remove_filename
-	
-				/*if (remove(removable_card)) {		// для этого нужен тип char. с типом  char возникают проблемы при транспортировке данных в класс из main
-				printf("Error removing file");
-				return 1;
-				}
-				else return 0;
-				
-//20//	как-то тут char зачесался неуместно. к тому же, с ограниченным размером.
+//19//	Варианты удаления	:	https://docs.google.com/document/d/1RPJY0uDA3hxr2lDedYEDEqBo8Ssw9JUoxR1ymmzA3Gc/edit?usp=sharing
+//20//	как-то тут char зачесался неуместно. к тому же, с ограниченным размером. Пытался задать размер путем .size();
 //21//	(int cardnums, string cardname );
 //22//	: cardnums(new_cardnums), card_name(new_cardname) // Инициализация почему-то не работает. Нужно присваивать в теле конструктора
 //23//	вот тут лажа. Переменная не передаётся в класс. А метод класса сам принимает данные с консоли и с ними работает. Мне кажется, что это неправильно. Но иначе не работает, так как char ebёt mozgi; 
-//24//	//string removable_card;
-		//char removable_card[];
-
-//25//	RemoveOneCard()	//(string removable_cardname)
-		{
-		//removable_card = removable_cardname;
-
+//24//	//string removable_card;	//char removable_card[];
+//25//	RemoveOneCard()	//(string removable_cardname)	{	//removable_card = removable_cardname;
 //26//	Может быть, стоит засунуть enum в main;
 //27//	Пришлось сделать 2 разных метода и применять к одному объекту, так как нужно было открывать файл два раза: для удаления старых данных / и для записи новых; (Вместе это делать прога не хочет)
 //28//	Кажется, что break лучше здесь использовать. Так как, если использовать после system("pause"), то приходится лишний раз нажимать любую клавишу для выхода из консоли;
 //29//	Не знаю, получится ли сделать наследование, если 2 класса раскинуты по разным файлам;
 //30//	"Destructor called for class CardActions" - можно так;
 //31//	unsigned long long можно было бы использовать для номера карты. Но для этого нужно сменить шифрование данных, так как моё работает только для string;
+//32//	Не получается сделать динамическую память, так как разыменование не поддаётся методу size() / push_back() // string* desired_card_nums = new string; 
 
 
 //extra//	Если не нашел в Коде номер, который присутствует здесь, значит он есть в старой версии кода. Смотри старые файлы. Они тут есть.

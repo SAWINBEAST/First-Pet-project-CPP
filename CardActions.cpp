@@ -1,7 +1,5 @@
 ﻿#include "CardActions.h"
 #include <iostream>
-#include <ostream>
-#include <istream>
 #include <fstream>
 #include <string>
 #include <cstdio>
@@ -14,10 +12,10 @@ void CardActions::GetNums(const string& card_to_get) {
 		cout << "[-] File is not opened! 1 level of get_nums() ";
 		exit(EXIT_FAILURE);
 	}
-	string desired_card_nums;
+	string desired_card_nums;	//32!
 	while (getline(file, desired_card_nums))
 	{
-		std::string decrypt_nums;
+		string decrypt_nums;	//32!
 		std::string tempStr;	//14
 		for (size_t i = 0; i < desired_card_nums.size(); i += 3)
 		{
@@ -44,7 +42,7 @@ void CardActions::EnterNew(const string& new_cardnums, const string& new_cardnam
 		exit(EXIT_FAILURE);
 	}
 
-	string encrypt_cardnums = "";
+	string encrypt_cardnums = ""; //32!
 	for (size_t i = 0; i < new_cardnums.size(); i++)
 	{
 		for (size_t j = 0; j < 3 - (std::to_string((int)new_cardnums[i])).size(); j++)
@@ -101,13 +99,18 @@ void CardActions::ChangeNumsSecond(const string& change_cardname, const string& 
 // Удаляет данные определённой карты
 void CardActions::RemoveCard() {
 	//19
-	char file_name[30];	//20
+	char* file_name = new char[30];	//20
+
 	cout << "Which card would you like to remove?\nEnter the nickname of your card with postscript (.txt): ";
 	cin >> file_name;
+
 	if (remove(file_name) != 0)
 		std::cout << "huita. file has NOT been removed \n";
 	else
 		std::cout << "succes. file has been removed\n";
+
+	delete file_name;
+	file_name = nullptr;
 
 }
 

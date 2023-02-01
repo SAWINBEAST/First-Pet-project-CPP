@@ -3,6 +3,9 @@
 #include <fstream>
 #include <string>
 #include <cstdio>
+#include <stdio.h>
+#include <direct.h>
+
 
 // Показывает данные карты 
 void CardActions::GetNums(const string& card_to_get, string& currentUser) {
@@ -122,36 +125,98 @@ void CardActions::ChangeNumsSecond(const string& change_cardname, const string& 
 void CardActions::RemoveCard(string& file_name, string& currentUser) {
 	//19
 
-	string* path = new string;
-	*path = "C:\\Users\\79296\\source\\repos\\RealCardNumHolder11\\" + currentUser + "\\";
-	fstream file(*path + file_name + ".txt", std::ios::out | std::ios::trunc);	//18 
-	delete path;
-	path = nullptr;
-
-	if (!file.is_open()) {
-		cout << "[-] File is not openned! 1 level of change_nums() ";
-		exit(EXIT_FAILURE);
-	}
-	cout << "Succes. Card\""+ file_name +"\" has been removed.\n";
-	file.close();
+	// Нерабочие варианты
+	// 
+	//1 вариант
+	// 
+	//string* path = new string;
+	//*path = "C:\\Users\\79296\\source\\repos\\RealCardNumHolder11\\" + currentUser + "\\";
+	//fstream file(*path + file_name + ".txt", std::ios::out | std::ios::trunc);	//18 
+	//delete path;
+	//path = nullptr;
+	//if (!file.is_open()) {
+	//	cout << "[-] File is not openned! 1 level of change_nums() ";
+	//	exit(EXIT_FAILURE);
+	//}
+	//cout << "Succes. Card\""+ file_name +"\" has been removed.\n";
+	//file.close();
 	
 
+	//2 вариант 
+	//
+	/*int size = file_name.size();
+	char* currentFile = new char[size];
+	for (int i = 0; i < size; i++) {
+		currentFile[i] = (char)file_name[i];
+	}
+	(const char*)currentFile;
+	cout << currentFile;*/
+	/*if (remove(currentFile) != 0)
+		cout << "huita. file has NOT been removed \n";
+	else
+		cout << "succes. file has been removed\n";
+
+	delete[] currentFile;
+	currentFile = nullptr;*/
+
+
+	// Заметки
+	// 
+	//cout << file_name.size() << endl;;
+	//for (int i = 0; i < size; i++) {
+	//	cout << currentFile[i] << endl;;
+	//}
+	//cout << currentFile;
+	/*const char* currentFileReal = new char[size];
+	*currentFileReal = *currentFile;*/
+
 }
+
 
 // Удаляет все карты
 void CardActions::RemoveCards(string& currentUser) {
 	//36
-	
-	string* path = new string;
+
+
+
+	// Нерабочие варианты
+	// 
+	// 1 вариант
+	/*size_t* size = new size_t;
+	*size = currentUser.size();
+	char* currentFolder = new char[*size];
+	for (int i = 0; i < *size; i++) {
+		currentFolder[i] = (char)currentUser[i];
+	}
+	(const char*)currentFolder;
+
+	if (_rmdir(currentFolder)==-1) 
+		cout << "Error: ?" << endl;
+	else 
+		cout << "succesfully deleted" << endl;*/
+
+
+	//2 вариант
+	/*string* path = new string;
 	*path = "C:\\Users\\79296\\source\\repos\\RealCardNumHolder11\\" + currentUser + "";
 	fstream folder(*path, std::ios::trunc );	//18 
 	delete path;
 	path = nullptr;
 
 	if (!folder.is_open()) {
-		cout << "[-] Folder is not openned! 1 level of change_nums() ";
+		cout << "[-] Folder is not openned!";
 		exit(EXIT_FAILURE);
 	}
 	folder.close();
-	cout << "Succes. All cards of Account \"" + currentUser + "\" has been removed.\n";
+	cout << "Succes. All cards of Account \"" + currentUser + "\" has been removed.\n";*/
+
+
+	// 3 variant 
+	//#include <conio.h>
+	//#include <Windows.h>
+	//BOOL DeleteFolder(string* szPath);	// type : LPCSTR
+	//string* path = new string;
+	//*path = "C:\\Users\\79296\\source\\repos\\RealCardNumHolder11\\" + currentUser + "";
+	//if (DeleteFolder(*path) == TRUE)
+	//	cout << "Папка ВПО удалена!\n";
 }

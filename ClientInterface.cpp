@@ -1,7 +1,5 @@
 ﻿#include "ClientInterface.h"
 #include <iostream>
-#include <ostream>
-#include <istream>
 #include <fstream>
 #include <string>
 #include <cstdio>

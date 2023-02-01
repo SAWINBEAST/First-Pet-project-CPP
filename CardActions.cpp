@@ -5,9 +5,14 @@
 #include <cstdio>
 
 // Показывает данные карты 
-void CardActions::GetNums(const string& card_to_get) {
+void CardActions::GetNums(const string& card_to_get, string& currentUser) {
 	//13
-	fstream file("" + card_to_get + ".txt", std::ios::in);
+	string* path = new string;
+	*path = "C:\\Users\\79296\\source\\repos\\RealCardNumHolder11\\" + currentUser + "\\";
+	fstream file(*path + card_to_get + ".txt", std::ios::in);
+	delete path;
+	path = nullptr;
+
 	if (!file.is_open()) {
 		cout << "[-] File is not opened! 1 level of get_nums() ";
 		exit(EXIT_FAILURE);
@@ -30,13 +35,20 @@ void CardActions::GetNums(const string& card_to_get) {
 	}
 
 	file.close();
+	
 
 	cout << "Above you see the details of card \"" + card_to_get + "\" " << endl;
 }
 
 // Записывает новые данные карты 
-void CardActions::EnterNew(const string& new_cardnums, const string& new_cardname) {
-	ofstream file("" + new_cardname + ".txt", std::ios::app);	//15
+void CardActions::EnterNew(const string& new_cardnums, const string& new_cardname, string& currentUser) {
+
+	string* path = new string;
+	*path = "C:\\Users\\79296\\source\\repos\\RealCardNumHolder11\\" + currentUser + "\\";
+	ofstream file(*path + new_cardname + ".txt", std::ios::app);
+	delete path;
+	path = nullptr;
+
 	if (!file.is_open()) {
 		cout << "[-] File is not opened!";
 		exit(EXIT_FAILURE);
@@ -59,9 +71,14 @@ void CardActions::EnterNew(const string& new_cardnums, const string& new_cardnam
 }
 
 // Удаляет данные существующей карты 
-void CardActions::ChangeNumsFirst(const string& change_cardname) {//17
+void CardActions::ChangeNumsFirst(const string& change_cardname, string& currentUser) {//17
 
-	fstream file("" + change_cardname + ".txt", std::ios::out | std::ios::trunc);		//18  
+	string* path = new string;
+	*path = "C:\\Users\\79296\\source\\repos\\RealCardNumHolder11\\" + currentUser + "\\";
+	fstream file(*path + change_cardname + ".txt", std::ios::out | std::ios::trunc);	//18 
+	delete path;
+	path = nullptr;
+	 
 	if (!file.is_open()) {
 		cout << "[-] File is not openned! 1 level of change_nums() ";
 		exit(EXIT_FAILURE);
@@ -71,9 +88,14 @@ void CardActions::ChangeNumsFirst(const string& change_cardname) {//17
 }
 
 // Меняет(обновляет) данные существующей карты
-void CardActions::ChangeNumsSecond(const string& change_cardname, const string& change_cardnums) {
+void CardActions::ChangeNumsSecond(const string& change_cardname, const string& change_cardnums, string& currentUser) {
 
-	fstream file("" + change_cardname + ".txt", std::ios::app);		//ofstream ?
+	string* path = new string;
+	*path = "C:\\Users\\79296\\source\\repos\\RealCardNumHolder11\\" + currentUser + "\\";
+	fstream file(*path + change_cardname + ".txt", std::ios::app);	//18 
+	delete path;
+	path = nullptr;
+
 	if (!file.is_open()) {
 		cout << "[-] File is not opened! 2 level of change_nums() ";
 		exit(EXIT_FAILURE);
@@ -97,25 +119,39 @@ void CardActions::ChangeNumsSecond(const string& change_cardname, const string& 
 }
 
 // Удаляет данные определённой карты
-void CardActions::RemoveCard() {
+void CardActions::RemoveCard(string& file_name, string& currentUser) {
 	//19
-	char* file_name = new char[30];	//20
 
-	cout << "Which card would you like to remove?\nEnter the nickname of your card with postscript (.txt): ";
-	cin >> file_name;
+	string* path = new string;
+	*path = "C:\\Users\\79296\\source\\repos\\RealCardNumHolder11\\" + currentUser + "\\";
+	fstream file(*path + file_name + ".txt", std::ios::out | std::ios::trunc);	//18 
+	delete path;
+	path = nullptr;
 
-	if (remove(file_name) != 0)
-		std::cout << "huita. file has NOT been removed \n";
-	else
-		std::cout << "succes. file has been removed\n";
-
-	delete file_name;
-	file_name = nullptr;
+	if (!file.is_open()) {
+		cout << "[-] File is not openned! 1 level of change_nums() ";
+		exit(EXIT_FAILURE);
+	}
+	cout << "Succes. Card\""+ file_name +"\" has been removed.\n";
+	file.close();
+	
 
 }
 
 // Удаляет все карты
-void CardActions::RemoveCards() {
-	cout << "This action is temporarily unavailable.\nContact the developer\nWe suggest you delete all files separately." << endl;
+void CardActions::RemoveCards(string& currentUser) {
+	//36
+	
+	string* path = new string;
+	*path = "C:\\Users\\79296\\source\\repos\\RealCardNumHolder11\\" + currentUser + "";
+	fstream folder(*path, std::ios::trunc );	//18 
+	delete path;
+	path = nullptr;
 
+	if (!folder.is_open()) {
+		cout << "[-] Folder is not openned! 1 level of change_nums() ";
+		exit(EXIT_FAILURE);
+	}
+	folder.close();
+	cout << "Succes. All cards of Account \"" + currentUser + "\" has been removed.\n";
 }

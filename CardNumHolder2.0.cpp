@@ -19,9 +19,13 @@ enum CHOICE {	//26
 
 int main() // Ниже присутствуют числа в комментах. Это ключи для поиска развёрнутого комментария в файле CommentsKeys.txt
 {
-	
+	setlocale(LC_ALL, "Russian");
+
 	// Регистрация и вход
 	LoginProcess login;
+	//string* currentUser = new string;	//34
+	string* currentUser = new string ;
+
 	unsigned short* choiceLog = new unsigned short;		//1
 	*choiceLog = 0;
 	cout << "1:Register\n2:Login\nYour choice: "; cin >> *choiceLog;
@@ -33,21 +37,30 @@ int main() // Ниже присутствуют числа в комментах
 
 	else if (*choiceLog == 2)
 	{
-		bool* status = new bool;	
-		*status = false;		//2			
-		*status = login.IsLoggedIn();
+		unsigned char* status = new unsigned char;	//35
+		*status = 1;		//2			
+		*status = login.IsLoggedIn(currentUser);	//35
 
 
-		if (*status == 0)
+		if (*status == 2)
 		{
 			cout << "False Login! Try again. \n " << endl;
+
+			delete status;
+			status = nullptr;
+
 			system("PAUSE");
 			main();
 		}
 
-		else
+		else if (*status == 1)
 		{
 			cout << "Succesfully logged in! \n " << endl;
+		}
+
+		else
+		{
+			cout << "error on LogIn level" << endl;
 		}
 
 		delete status;
@@ -85,7 +98,7 @@ int main() // Ниже присутствуют числа в комментах
 			cout << "Nickname of card: ";
 			getline(cin, *card_to_get);
 			//7
-			user.GetNums(*card_to_get);
+			user.GetNums(*card_to_get, *currentUser);
 
 			delete card_to_get;
 			card_to_get = nullptr;
@@ -104,7 +117,7 @@ int main() // Ниже присутствуют числа в комментах
 			cout << "\nLet's come up with nickname of this card: ";
 			cin >> *new_cardname;
 
-			user.EnterNew(*new_cardnums, *new_cardname);
+			user.EnterNew(*new_cardnums, *new_cardname, *currentUser);
 
 			delete new_cardnums;
 			delete new_cardname;
@@ -125,8 +138,8 @@ int main() // Ниже присутствуют числа в комментах
 			cout << "Enter new numbers for this card: ";
 			cin >> *change_cardnums;
 
-			user.ChangeNumsFirst(*change_cardname);	//27
-			user.ChangeNumsSecond(*change_cardname, *change_cardnums);
+			user.ChangeNumsFirst(*change_cardname, *currentUser);	//27
+			user.ChangeNumsSecond(*change_cardname, *change_cardnums, *currentUser);
 
 			delete change_cardname;
 			delete change_cardnums;
@@ -139,7 +152,11 @@ int main() // Ниже присутствуют числа в комментах
 		else if (*choice == REMOVE_ONE) {
 			system("cls");
 			//10!
-			user.RemoveCard();
+			string* file_name = new string;
+			cout << "Which card would you like to remove?\nEnter the nickname of your card: ";
+			cin >> *file_name;
+
+			user.RemoveCard(*file_name, *currentUser);
 
 			system("pause");
 		}
@@ -148,7 +165,7 @@ int main() // Ниже присутствуют числа в комментах
 		else if (*choice == REMOVE_ALL) { //in progress
 			system("cls");
 
-			user.RemoveCards();
+			user.RemoveCards(*currentUser);
 			//12
 			system("pause");
 		}
@@ -157,9 +174,9 @@ int main() // Ниже присутствуют числа в комментах
 		else if (*choice == EXIT) {
 			system("cls");
 			cout << " thats all for today. goodbye " << endl;
-			//28
+			break;	//28
 			system("pause");
-			break;
+			
 		}
 
 		else
@@ -168,6 +185,9 @@ int main() // Ниже присутствуют числа в комментах
 		delete choice;
 		choice = nullptr;
 	}
+
+	delete currentUser;
+	currentUser = nullptr;
 
 	return 168;
 }

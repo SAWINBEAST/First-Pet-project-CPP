@@ -1,10 +1,9 @@
 ﻿#include "LoginProcess.h"
 #include <iostream>
-#include <ostream>
-#include <istream>
 #include <fstream>
 #include <string>
 #include <cstdio>
+#include <direct.h>
 
 // Проводит регистрацию нового пользователя и запись его данных в файл
 void LoginProcess::Registration() {
@@ -16,14 +15,27 @@ void LoginProcess::Registration() {
 	cout << "Select a password: "; cin >> *password;
 
 	ofstream file;
-	file.open("C:\\" + *username + ".txt");
+	file.open("C:\\Users\\79296\\source\\repos\\RealCardNumHolder11\\" + *username + ".txt");
 	if (!file.is_open()) {
 		cout << "[-] File is not opened!";
 		exit(EXIT_FAILURE);
 	}
 	file << *username << endl << *password;
 	file.close();
-	cout << "Successfully registered.\n " << endl;
+	cout << "New account successfully registered.\n " << endl;
+
+	//Создание индивидуальной папки для клиента
+	const string path_s = "C:\\Users\\79296\\source\\repos\\RealCardNumHolder11\\" + *username + "";
+	try {
+		string path = path_s;
+		//33
+		_mkdir(path.c_str()); //34
+		cout << "Personal directory - cardholder has been created.\n" << endl;
+	}
+	catch (const exception& e) {
+		cerr << e.what() << '\n';
+		cout << "Ooops. Something went wrong on the \"directory-create\" level.";
+	}
 
 	delete username;
 	delete password;
@@ -31,8 +43,9 @@ void LoginProcess::Registration() {
 	password = nullptr;
 }
 
+
 // Осуществляет вход уже зарегистрированного пользователя
-bool LoginProcess::IsLoggedIn() {
+int LoginProcess::IsLoggedIn(string* currentUser) {
 
 	string* username = new string;
 	string* password = new string;
@@ -44,7 +57,7 @@ bool LoginProcess::IsLoggedIn() {
 	cout << "Enter username: "; cin >> *username;
 	cout << "Enter password: "; cin >> *password;
 
-	ifstream read("C:\\" + *username + ".txt");
+	ifstream read("C:\\Users\\79296\\source\\repos\\RealCardNumHolder11\\" + *username + ".txt");
 	if (!read.is_open()) {
 		cout << "[-] File is not opened!";
 		exit(EXIT_FAILURE);
@@ -55,19 +68,22 @@ bool LoginProcess::IsLoggedIn() {
 
 	if (*un == *username && *pw == *password)
 	{
-		return true;
+		*currentUser = *username;
+		delete un, pw, username, password;
+		username = nullptr;
+		password = nullptr;
+		un = nullptr;
+		pw = nullptr;
+		return 1;
 	}
 	else
 	{
-		return false;
+		delete un, pw, username, password;
+		username = nullptr;
+		password = nullptr;
+		un = nullptr;
+		pw = nullptr;
+		return 2;
 	}
 
-	delete un;
-	delete pw;
-	delete username;
-	delete password;
-	username = nullptr;
-	password = nullptr;
-	un = nullptr;
-	pw = nullptr;
 }

@@ -27,11 +27,16 @@
 //25//	RemoveOneCard()	//(string removable_cardname)	{	//removable_card = removable_cardname;
 //26//	Может быть, стоит засунуть enum в main;
 //27//	Пришлось сделать 2 разных метода и применять к одному объекту, так как нужно было открывать файл два раза: для удаления старых данных / и для записи новых; (Вместе это делать прога не хочет)
-//28//	Кажется, что break лучше здесь использовать. Так как, если использовать после system("pause"), то приходится лишний раз нажимать любую клавишу для выхода из консоли;
+//28//	break лучше использовать здесь. Так как, если использовать после system("pause"), то приходится лишний раз нажимать любую клавишу для выхода из консоли;
 //29//	Не знаю, получится ли сделать наследование, если 2 класса раскинуты по разным файлам;
 //30//	"Destructor called for class CardActions" - можно так;
 //31//	unsigned long long можно было бы использовать для номера карты. Но для этого нужно сменить шифрование данных, так как моё работает только для string;
 //32//	Не получается сделать динамическую память, так как разыменование не поддаётся методу size() / push_back() // string* desired_card_nums = new string; 
+//33//	Можно ещё так было : https://docs.google.com/document/d/1RPJY0uDA3hxr2lDedYEDEqBo8Ssw9JUoxR1ymmzA3Gc/edit?usp=sharing
+//34//	Можно было бы if(!) сделать,чтобы не IDE не ругалась на неиспользование возвращаемоего true/false. Но тогда теряется смысл try/catch
+//35//	Изначально здесь была bool переменная и bool функция; Сменил по причине невозможности вернуть currentUser(name) ;
+//36//	cout << "This action is temporarily unavailable.\nContact the developer\nWe suggest you delete all files separately." << endl;
+//37//	if (remove(file_name) != 0) ; remove() идеально удаляет файл, но принимает только char; продолжение: https://docs.google.com/document/d/1RPJY0uDA3hxr2lDedYEDEqBo8Ssw9JUoxR1ymmzA3Gc/edit?usp=sharing ;
 
 
 //extra//	Если не нашел в Коде номер, который присутствует здесь, значит он есть в старой версии кода. Смотри старые файлы. Они тут есть.

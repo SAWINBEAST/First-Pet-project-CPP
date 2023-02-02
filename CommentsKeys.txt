@@ -37,6 +37,7 @@
 //35//	Изначально здесь была bool переменная и bool функция; Сменил по причине невозможности вернуть currentUser(name) ;
 //36//	cout << "This action is temporarily unavailable.\nContact the developer\nWe suggest you delete all files separately." << endl;
 //37//	if (remove(file_name) != 0) ; remove() идеально удаляет файл, но принимает только char; продолжение: https://docs.google.com/document/d/1RPJY0uDA3hxr2lDedYEDEqBo8Ssw9JUoxR1ymmzA3Gc/edit?usp=sharing ;
-
+//38//	Тут нужно как-то поаккуратнее ввести данные
+//39//	Проверка типа данных не работает.
 
 //extra//	Если не нашел в Коде номер, который присутствует здесь, значит он есть в старой версии кода. Смотри старые файлы. Они тут есть.

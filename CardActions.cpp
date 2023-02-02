@@ -5,7 +5,10 @@
 #include <cstdio>
 #include <stdio.h>
 #include <direct.h>
+#include <filesystem>
+namespace fs = std::filesystem;
 
+using namespace std;
 
 // Показывает данные карты 
 void CardActions::GetNums(const string& card_to_get, string& currentUser) {
@@ -13,34 +16,42 @@ void CardActions::GetNums(const string& card_to_get, string& currentUser) {
 	string* path = new string;
 	*path = "C:\\Users\\79296\\source\\repos\\RealCardNumHolder11\\" + currentUser + "\\";
 	fstream file(*path + card_to_get + ".txt", std::ios::in);
+
+	fs::path cardPath(*path + card_to_get + ".txt");
 	delete path;
 	path = nullptr;
+	if (fs::exists(cardPath)) {
 
-	if (!file.is_open()) {
-		cout << "[-] File is not opened! 1 level of get_nums() ";
-		exit(EXIT_FAILURE);
-	}
-	string desired_card_nums;	//32!
-	while (getline(file, desired_card_nums))
-	{
-		string decrypt_nums;	//32!
-		std::string tempStr;	//14
-		for (size_t i = 0; i < desired_card_nums.size(); i += 3)
+		if (!file.is_open()) {
+			cout << "[-] File is not opened! 1 level of get_nums() ";
+			exit(EXIT_FAILURE);
+		}
+		string desired_card_nums;	//32!
+		while (getline(file, desired_card_nums))
 		{
-			tempStr.push_back(desired_card_nums[i]);
-			tempStr.push_back(desired_card_nums[i + 1]);
-			tempStr.push_back(desired_card_nums[i + 2]);
-			decrypt_nums.push_back(char(std::stoi(tempStr)));
-			tempStr.clear();
+			string decrypt_nums;	//32!
+			std::string tempStr;	//14
+			for (size_t i = 0; i < desired_card_nums.size(); i += 3)
+			{
+				tempStr.push_back(desired_card_nums[i]);
+				tempStr.push_back(desired_card_nums[i + 1]);
+				tempStr.push_back(desired_card_nums[i + 2]);
+				decrypt_nums.push_back(char(std::stoi(tempStr)));
+				tempStr.clear();
+			}
+
+			cout << decrypt_nums << endl;
 		}
 
-		std::cout << decrypt_nums << std::endl;
+		file.close();
+
+
+		cout << "Above you see the details of card \"" + card_to_get + "\" " << endl;
 	}
-
-	file.close();
+	else {
+		cout << "You haven't got this card. Check entered cardname." << endl;
 	
-
-	cout << "Above you see the details of card \"" + card_to_get + "\" " << endl;
+	}
 }
 
 // Записывает новые данные карты 
@@ -60,11 +71,11 @@ void CardActions::EnterNew(const string& new_cardnums, const string& new_cardnam
 	string encrypt_cardnums = ""; //32!
 	for (size_t i = 0; i < new_cardnums.size(); i++)
 	{
-		for (size_t j = 0; j < 3 - (std::to_string((int)new_cardnums[i])).size(); j++)
+		for (size_t j = 0; j < 3 - (to_string((int)new_cardnums[i])).size(); j++)
 		{
 			encrypt_cardnums += "0";
 		}
-		encrypt_cardnums += std::to_string((int)(new_cardnums[i]));
+		encrypt_cardnums += to_string((int)(new_cardnums[i]));
 	}
 
 	file << encrypt_cardnums;	//16
@@ -108,14 +119,14 @@ void CardActions::ChangeNumsSecond(const string& change_cardname, const string& 
 
 	for (size_t i = 0; i < change_cardnums.size(); i++)
 	{
-		for (size_t j = 0; j < 3 - (std::to_string((int)change_cardnums[i])).size(); j++)
+		for (size_t j = 0; j < 3 - (to_string((int)change_cardnums[i])).size(); j++)
 		{
 			encrypt_cardnums += "0";
 		}
-		encrypt_cardnums += std::to_string((int)(change_cardnums[i]));
+		encrypt_cardnums += to_string((int)(change_cardnums[i]));
 	}
 
-	file << encrypt_cardnums;			// Тут нужно как-то поаккуратнее ввести данные
+	file << encrypt_cardnums;	//38
 	file.close();
 
 	cout << "Actual cardnumbers for " + change_cardname + " was succesfully changed.\n" << endl;
@@ -124,99 +135,40 @@ void CardActions::ChangeNumsSecond(const string& change_cardname, const string& 
 // Удаляет данные определённой карты
 void CardActions::RemoveCard(string& file_name, string& currentUser) {
 	//19
-
-	// Нерабочие варианты
-	// 
-	//1 вариант
-	// 
-	//string* path = new string;
-	//*path = "C:\\Users\\79296\\source\\repos\\RealCardNumHolder11\\" + currentUser + "\\";
-	//fstream file(*path + file_name + ".txt", std::ios::out | std::ios::trunc);	//18 
-	//delete path;
-	//path = nullptr;
-	//if (!file.is_open()) {
-	//	cout << "[-] File is not openned! 1 level of change_nums() ";
-	//	exit(EXIT_FAILURE);
-	//}
-	//cout << "Succes. Card\""+ file_name +"\" has been removed.\n";
-	//file.close();
-	
-
-	//2 вариант 
-	//
-	/*int size = file_name.size();
-	char* currentFile = new char[size];
-	for (int i = 0; i < size; i++) {
-		currentFile[i] = (char)file_name[i];
+	string* path = new string;
+	*path = "C:\\Users\\79296\\source\\repos\\RealCardNumHolder11\\" + currentUser + "\\";
+	fs::path userPath(*path);
+	if (!fs::is_empty(userPath)) {
+		if (!fs::remove(*path + file_name + ".txt"))
+			cout << "Ooops. Something went wrong." << endl;
+		else
+			cout << "Card " + file_name + " succesfully deleted." << endl;
+		delete path;
+		path = nullptr;
 	}
-	(const char*)currentFile;
-	cout << currentFile;*/
-	/*if (remove(currentFile) != 0)
-		cout << "huita. file has NOT been removed \n";
-	else
-		cout << "succes. file has been removed\n";
-
-	delete[] currentFile;
-	currentFile = nullptr;*/
-
-
-	// Заметки
-	// 
-	//cout << file_name.size() << endl;;
-	//for (int i = 0; i < size; i++) {
-	//	cout << currentFile[i] << endl;;
-	//}
-	//cout << currentFile;
-	/*const char* currentFileReal = new char[size];
-	*currentFileReal = *currentFile;*/
-
+	else {
+		cout << "Your CardHolder is empty. There aren't any card." << endl;
+		delete path;
+		path = nullptr;
+	}
 }
 
 
 // Удаляет все карты
 void CardActions::RemoveCards(string& currentUser) {
 	//36
-
-
-
-	// Нерабочие варианты
-	// 
-	// 1 вариант
-	/*size_t* size = new size_t;
-	*size = currentUser.size();
-	char* currentFolder = new char[*size];
-	for (int i = 0; i < *size; i++) {
-		currentFolder[i] = (char)currentUser[i];
-	}
-	(const char*)currentFolder;
-
-	if (_rmdir(currentFolder)==-1) 
-		cout << "Error: ?" << endl;
-	else 
-		cout << "succesfully deleted" << endl;*/
-
-
-	//2 вариант
-	/*string* path = new string;
+	string* path = new string;
 	*path = "C:\\Users\\79296\\source\\repos\\RealCardNumHolder11\\" + currentUser + "";
-	fstream folder(*path, std::ios::trunc );	//18 
+	if(!std::filesystem::remove_all(*path)) // Deletes one or more files recursively.
+		cout << "Ooops. Something went wrong." << endl;
+	else {
+		cout << "All Cards of account \"" + currentUser + "\" succesfully deleted." << endl;
+		if (fs::create_directories(*path))
+			cout << "Use the updated CardHolder \"na zdorovie!\"" << endl;
+		else {
+			cout << "Problems with creation of new CardHolder. Create it by yourself." << endl;
+		}
+	}
 	delete path;
 	path = nullptr;
-
-	if (!folder.is_open()) {
-		cout << "[-] Folder is not openned!";
-		exit(EXIT_FAILURE);
-	}
-	folder.close();
-	cout << "Succes. All cards of Account \"" + currentUser + "\" has been removed.\n";*/
-
-
-	// 3 variant 
-	//#include <conio.h>
-	//#include <Windows.h>
-	//BOOL DeleteFolder(string* szPath);	// type : LPCSTR
-	//string* path = new string;
-	//*path = "C:\\Users\\79296\\source\\repos\\RealCardNumHolder11\\" + currentUser + "";
-	//if (DeleteFolder(*path) == TRUE)
-	//	cout << "Папка ВПО удалена!\n";
 }

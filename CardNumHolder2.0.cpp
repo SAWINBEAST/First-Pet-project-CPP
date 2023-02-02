@@ -5,8 +5,12 @@
 #include <iostream>
 #include <stdio.h>
 #include <string>
+#include <typeinfo>
+#include <filesystem>
+namespace fs = std::filesystem;
 
 using namespace std;
+
 
 enum CHOICE {	//26
 	GET_CARD = 1,
@@ -29,53 +33,63 @@ int main() // Ниже присутствуют числа в комментах
 	unsigned short* choiceLog = new unsigned short;		//1
 	*choiceLog = 0;
 	cout << "1:Register\n2:Login\nYour choice: "; cin >> *choiceLog;
-	if (*choiceLog == 1)	//1
-	{
-		login.Registration();
-		main();
-	}
-
-	else if (*choiceLog == 2)
-	{
-		unsigned char* status = new unsigned char;	//35
-		*status = 1;		//2			
-		*status = login.IsLoggedIn(currentUser);	//35
-
-
-		if (*status == 2)
+	if (typeid(*choiceLog) == typeid(unsigned short)) {	//38
+		if (*choiceLog == 1)	//1
 		{
-			cout << "False Login! Try again. \n " << endl;
-
-			delete status;
-			status = nullptr;
-
-			system("PAUSE");
+			login.Registration();
 			main();
 		}
 
-		else if (*status == 1)
+		else if (*choiceLog == 2)
 		{
-			cout << "Succesfully logged in! \n " << endl;
+			unsigned char* status = new unsigned char;	//35
+			*status = 1;		//2			
+			*status = login.IsLoggedIn(currentUser);	//35
+
+
+			if (*status == 2)
+			{
+				cout << "False Login! Try again. \n " << endl;
+
+				delete status;
+				status = nullptr;
+
+				system("PAUSE");
+				main();
+			}
+
+			else if (*status == 1)
+			{
+				cout << "Succesfully logged in! \n " << endl;
+			}
+
+			else
+			{
+				cout << "error on LogIn level" << endl;
+			}
+
+			delete status;
+			status = nullptr;
 		}
 
 		else
 		{
-			cout << "error on LogIn level" << endl;
+			cout << "We have not got this variant. Sorry. \nLet's try again !\n  " << endl;
+			delete choiceLog;
+			choiceLog = nullptr;
+			main();
 		}
 
-		delete status;
-		status = nullptr;
+		delete choiceLog;
+		choiceLog = nullptr;
 	}
-
 	else
 	{
 		cout << "We have not got this variant. Sorry. \nLet's try again !\n  " << endl;
+		delete choiceLog;
+		choiceLog = nullptr;
 		main();
 	}
-
-	delete choiceLog;
-	choiceLog = nullptr;
-
 	
 
 	// Выполнение задач КардХолдера 
